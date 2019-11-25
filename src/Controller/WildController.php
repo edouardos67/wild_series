@@ -13,41 +13,42 @@ class WildController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('wild/index.html.twig',[
+        return $this->render('wild/index.html.twig', [
         'website' => 'Wild Séries'
         ]);
     }
 
     /**
-     * @Route("/wild/show/{slug}", name="wild_show")
+     * @Route("/wild/show/{slug}",  name="wild_show")
      */
-    public function show(string $slug): Response
+    public function show($slug): Response
     {
-        $pattern = "/^[a-z0-9-]+$/";
-        if (preg_match($pattern,$slug)) {
-            $nomSerie = str_replace("-"," ",$slug);
-            $nomSerie = ucwords($nomSerie);
-            return $this->redirectToRoute('wild_show',['nomSerie' => $nomSerie]);
-        }
-        if ($slug === '') {
-            $nomSerie = "Aucune série sélectionnée, veuillez choisir une série";
-            return $this->render('wild/show.html.twig',[
-            'nomSerie' => $nomSerie
+
+        $pattern = "/^[a-z0-9-éèàùçâîê]+$/";
+        if (preg_match($pattern, $slug) || $slug === '') {
+            if ($slug !== "") {
+                $nomSerie = str_replace("-", " ", $slug);
+                $nomSerie = ucwords($nomSerie);
+                return $this->render('wild/show.html.twig', ['nomSerie' => $nomSerie, 'slug' => $slug]);
+            } else {
+                return $this->showDefaut();
+            }
+        } else {
+            return $this->render('wild/index.html.twig', [
+            'website' => 'Wild Séries'
             ]);
         }
+
     }
 
     /**
-     * @Route("/wild/new", name="wild_new")
+     * @Route("/wild/show",  name="wild_show_defaut")
      */
-
-    public function new(): Response
+    public function showDefaut(): Response
     {
-        // traitement d'un formulaire par exemple
-
-        // redirection vers la page 'wild_show', correspondant à l'url wild/show/5
-        return $this->redirectToRoute('wild_show', ['page' => 5]);
-    }
+            return $this->render('wild/show.html.twig', [
+            'nomSerie' => 'Aucune série sélectionnée, veuillez choisir une série'
+            ]);
+     }
 
 }
-

@@ -1,6 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block title %}Welcome!{% endblock %}
 {% block stylesheets %}{% endblock %}
-{% block body %}<h1>Bienvenue !</h1>{% endblock %}
+{% block body %}
+
+    <h1>Bienvenue !</h1>
+    <form method="post">
+        <input type="text" name="serieToShow">
+        <br>
+        <button type="submit">Voir cette série</button>
+
+    </form>
+
+
+
+
+{% endblock %}
 {% block javascripts %}{% endblock %}
 

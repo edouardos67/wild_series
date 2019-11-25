@@ -1,3 +1,10 @@
-<h1> {{ nomSerie }}</h1>
-<br>
-{#<a href="{{ path('wild_show', {'page':5}) }}">Afficher la page 5</a>#}
+{% extends 'base.html.twig' %}
+{% block title %}{{ nomSerie }}{% endblock %}
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <h1> {{ nomSerie }} </h1>
+    <br>
+    {#<a href="{{ path('wild_show', {'page':5}) }}">Afficher la page 5</a>#}
+{% endblock %}
+{% block javascripts %}{% endblock %}
