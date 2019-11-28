@@ -1,13 +1,63 @@
 // the ~ allows you to reference things in node_modules
-@import "~bootstrap/scss/bootstrap";
 
-
-body {
+/*body {
     background-color: red;
-}
+}*/
 
 $theme-colors: (
         "primary": #0074d9,
         "danger": #ff4136,
         "custom-color": #900
 );
+
+$body-bg: green;
+$body-color: orange;
+@import "~bootstrap/scss/bootstrap";
+
+/*body {
+    background-color: blue;
+}*/
+
+.seasonCard {
+    margin-left: 20px;
+    padding: 10px;
+    border: 2px solid $body-color;
+}
+
+.seasonDescDisplay h4 {
+    font-size: 80%;
+}
+
+.seasonTitleDisplay, .seasonDescDisplay {
+    width: 40em;
+    margin-left: 20px;
+}
+
+.seasonTitleDisplay {
+    margin-bottom: 25px;
+    border-bottom: 2px solid $body-color;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+.seasonTitleDisplay h3 {
+    margin: auto 0;
+}
+
+.episode {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+.episodeText {
+    margin-left: 30px;
+    //width: 100px;
+    padding-right: 0px;
+}
+
+.twig {
+    font-style: italic;
+    padding-left: 10px;
+}
+

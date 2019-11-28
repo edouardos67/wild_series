@@ -1,0 +1,31 @@
+{# templates/wild/showEpisodes.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ programTitle ~ ' '~ seasonNb }}{% endblock %}
+
+{% block body %}
+
+    <div class="seasonTitleDisplay">
+        <h3>{{ 'saison '~ seasonNb ~ ' de'  }}</h3><h3 class="twig">{{ programTitle }}</h3>
+    </div>
+    <div class="seasonDescDisplay">
+        <h4>{{ seasonDesc }}</h4>
+    </div>
+    <div class="card seasonCard" style="width: 30rem;">
+        <h5 class="episodesList card-title">Liste des épisodes</h5>
+        {% for episode in episodes %}
+            <div class="episode"><h6 class="episodeText">{{ 'Episode '~ episode.number ~ ' : '}}</h6><h6 class="twig">{{  episode.title  }}</h6></div>
+        {% else %}
+            Aucun épisode trouvé.
+        {% endfor %}
+        </h5>
+    </div>
+    {#<div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>#}
+{% endblock %}
