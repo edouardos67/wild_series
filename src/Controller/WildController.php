@@ -2,6 +2,7 @@
 // src/Controller/WildController.php
 namespace App\Controller;
 
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
@@ -113,16 +114,6 @@ class WildController extends AbstractController
         ' ', ucwords(trim(strip_tags($programName)), "-")
         );
 
-        /*$seasonNb = $this->getDoctrine()
-        ->getRepository(Season::class)
-        ->findOneBy(['program' => $program])
-        ->getNumber();
-        if (!$seasonNb) {
-            throw $this->createNotFoundException(
-            'No season number for this '.$program.'.'
-            );
-        }*/
-
         $seasons = $this->getDoctrine()
         ->getRepository(Program::class)
         ->findOneBy(['title' => $program])
@@ -203,6 +194,26 @@ class WildController extends AbstractController
         'episodes' => $episodes,
         ]);
 
+    }
+
+     /**
+     * @Route("episode/{id}", name="show_episode")
+     */
+    public function showEpisode(Episode $episode):Response
+    {
+        $season = $this->getDoctrine()
+        ->getRepository(Episode::class)
+        ->find($episode)
+        ->getSeason();
+
+        $program = $this->getDoctrine()
+        ->getRepository(Season::class)
+        ->find($season)
+        ->getProgram();
+
+        return $this->render('/wild/showOneEpisode.html.twig',[
+            'episode' => $episode, 'season' => $season, 'program' => $program
+        ]);
     }
 //    les commentaires dessous correspondent à l'état au moment de la quete_symfony_5'
 //   ---------------------------------------------------------------------------------

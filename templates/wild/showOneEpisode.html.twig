@@ -1,0 +1,13 @@
+{# templates/wild/showOneEpisode.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'episode' ~ episode.number }}{% endblock %}
+
+{% block body %}
+
+    <div class="seasonTitleDisplay">
+        <h3>{{ 'episode '~ episode.number ~ ' de la saison' ~ season.number ~ ' de ' ~ program.title }}</h3><h3 class="twig">{{ episode.title }}</h3>
+    </div>
+    <div class="seasonDescDisplay">
+        <h4>{{ episode.synopsis }}</h4>
+    </div>
+{% endblock %}
