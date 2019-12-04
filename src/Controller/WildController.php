@@ -6,6 +6,8 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
+use App\Form\ProgramSearchType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +20,10 @@ class WildController extends AbstractController
      * @Route("/wild", name="wild_index")
      * @return Response A response instance
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+
+
         $programs = $this->getDoctrine()->getRepository(Program::class)->findAll();
 
         if (!$programs) {
@@ -29,9 +33,10 @@ class WildController extends AbstractController
         }
 
 
+
         return $this->render('wild/index.html.twig', [
-        'programs' => $programs]
-        );
+            'programs' => $programs,
+        ]);
     }
 
     /**
@@ -66,12 +71,12 @@ class WildController extends AbstractController
         ]);
     }
 
-    /**
-     * @param string $$categoryName
-     * @Route("/category/{categoryName}", name="show_category")
-     * @return Response
-     */
-    public function showByCategory(string $categoryName):Response
+//    /**
+//     * @param string $$categoryName
+//     * @Route("/category/{categoryName}", name="show_category")
+//     * @return Response
+//     */
+/*    public function showByCategory(string $categoryName):Response
     {
         if (!$categoryName) {
             throw $this
@@ -96,7 +101,7 @@ class WildController extends AbstractController
         'categoryName'  => $categoryName
         ]);
 
-    }
+    }*/
 
     /**
      * @param string $programName
@@ -215,39 +220,4 @@ class WildController extends AbstractController
             'episode' => $episode, 'season' => $season, 'program' => $program
         ]);
     }
-//    les commentaires dessous correspondent à l'état au moment de la quete_symfony_5'
-//   ---------------------------------------------------------------------------------
-//    /**
-//     * @Route("/wild/show/{slug}",  name="wild_show")
-//     */
-    /*public function show(string $slug): Response
-    {
-
-        $pattern = "/^[a-z0-9-éèàùçâîê]+$/";
-        if (preg_match($pattern, $slug) || $slug === '') {
-            if ($slug !== "") {
-                $nomSerie = str_replace("-", " ", $slug);
-                $nomSerie = ucwords($nomSerie);
-                return $this->render('wild/show.html.twig', ['nomSerie' => $nomSerie, 'slug' => $slug]);
-            } else {
-                return $this->showDefaut();
-            }
-        } else {
-            return $this->render('wild/index.html.twig', [
-            'website' => 'Wild Séries'
-            ]);
-        }
-
-    }*/
-
-//    /**
-//     * @Route("/wild/show",  name="wild_show_defaut")
-//     */
-    /*public function showDefaut(): Response
-    {
-            return $this->render('wild/show.html.twig', [
-            'nomSerie' => 'Aucune série sélectionnée, veuillez choisir une série'
-            ]);
-     }*/
-
 }
