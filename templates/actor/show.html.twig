@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}actor.name{% endblock %}
+
+{% block body %}
+    <h1>{{ actor.name }}</h1>
+
+    {% for program in actor.programs %}
+        <div>
+            <h2><a href="{{ path('program_show', { 'id': program.id }) }}">{{ loop.index }}</a>{{ ' ' ~ program.title }}</h2>
+            {#            <h2>{{ loop.index }} / {{ season.number }} / {{ season.year }}</h2>#}
+{#            <p>{{ season.description }}</p>#}
+        </div>
+    {% else %}
+        Aucun programme associé à cet acteur.
+    {% endfor %}
+
+    {#<a href="{{ path('program_index') }}">back to list</a>
+
+    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+
+    {{ include('program/_delete_form.html.twig') }}#}
+{% endblock %}
