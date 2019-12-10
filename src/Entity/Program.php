@@ -49,6 +49,11 @@ class Program
      */
     private $actors;
 
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $slug_p;
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
@@ -166,5 +171,17 @@ class Program
 
         return $this;
     }
+
+    /*public function getslug_p(): ?string
+    {
+        return $this->slug_p;
+    }
+
+    public function setSlug(string $slug_p): self
+    {
+        $this->slug_p = $slug_p;
+
+        return $this;
+    }*/
 
 }

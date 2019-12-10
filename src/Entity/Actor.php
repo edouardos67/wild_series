@@ -28,6 +28,11 @@ class Actor
      */
     private $programs;
 
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $slug_a;
+
     public function __construct()
     {
         $this->programs = new ArrayCollection();
@@ -75,4 +80,16 @@ class Actor
 
         return $this;
     }
+
+    /*public function getslug_a(): ?string
+    {
+        return $this->slug_a;
+    }
+
+    public function setslug_a(string $slug_a): self
+    {
+        $this->slug_a = $slug_a;
+
+        return $this;
+    }*/
 }

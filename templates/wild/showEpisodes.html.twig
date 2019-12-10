@@ -15,7 +15,7 @@
         {% for episode in episodes %}
             <div class="episode">
                 <h6 class="episodeText">{{ 'Episode '~ episode.number ~ ' : '}}</h6>
-                <a href="{{ path('show_episode',{ 'id': episode.id })}}">
+                <a href="{{ path('show_episode',{ 'slug': episode.slug })}}">
                     <h6 class="twig">{{  episode.title  }}</h6>
                 </a>
             </div>

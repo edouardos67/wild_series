@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Episode;
+use App\Entity\Program;
+use App\Entity\Season;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
+use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/episode")
+ * @Route("/{slug_p}/season/{seasonNb}/episode")
  */
 class EpisodeController extends AbstractController
 {
@@ -20,6 +23,7 @@ class EpisodeController extends AbstractController
      */
     public function index(EpisodeRepository $episodeRepository): Response
     {
+
         return $this->render('episode/index.html.twig', [
             'episodes' => $episodeRepository->findAll(),
         ]);
@@ -28,7 +32,7 @@ class EpisodeController extends AbstractController
     /**
      * @Route("/new", name="episode_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $episode = new Episode();
         $form = $this->createForm(EpisodeType::class, $episode);
@@ -36,6 +40,7 @@ class EpisodeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $episode->setSlug($slugify->generate($episode->getTitle()));
             $entityManager->persist($episode);
             $entityManager->flush();
 
@@ -49,7 +54,7 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="episode_show", methods={"GET"})
+     * @Route("/{slug_e}", name="episode_show", methods={"GET"})
      */
     public function show(Episode $episode): Response
     {
@@ -59,7 +64,7 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="episode_edit", methods={"GET","POST"})
+     * @Route("/{slug_e}/edit", name="episode_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Episode $episode): Response
     {
@@ -79,7 +84,7 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="episode_delete", methods={"DELETE"})
+     * @Route("/{slug_e}", name="episode_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Episode $episode): Response
     {

@@ -1,3 +1,9 @@
+vidéos quete 15 :
+https://www.loom.com/share/c9ff9c6ba7884ede8cfca45d247411e2
+https://www.loom.com/share/51685f742f8d4501ac6dd9a04e9e3a60
+
+
+
 vidéo quete 14: https://www.loom.com/share/4a1e876d34504ccea43fb7510207f5bc
 
 vidéo quete 13: https://www.loom.com/share/4f80607cdd264e3fb223b4bfd7222d9b

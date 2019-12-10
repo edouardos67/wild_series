@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Season;
+use App\Entity\Program;
 use App\Form\SeasonType;
 use App\Repository\SeasonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/season")
+ * @Route("/program/season")
  */
 class SeasonController extends AbstractController
 {
@@ -20,8 +21,13 @@ class SeasonController extends AbstractController
      */
     public function index(SeasonRepository $seasonRepository): Response
     {
+        /*$programTitles = $this->getDoctrine()->getRepository(Program::class)
+        ->findOneBy(['id' =>])*/
+
         return $this->render('season/index.html.twig', [
             'seasons' => $seasonRepository->findAll(),
+            /*'slug_ps' => $slug_ps,
+            'programs' => $programTitles,*/
         ]);
     }
 
@@ -48,15 +54,21 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="season_show", methods={"GET"})
-     */
-    public function show(Season $season): Response
+//    /**
+//     * @Route("/{id}", name="season_show", methods={"GET"})
+//     */
+    /*public function show(Season $season): Response
     {
+//        $programId = $season['program'];
+        var_dump($season);
+        die();
+        $programTitle = $this->getDoctrine()->getRepository(Program::class)
+        ->findOneBy(['id'=>$programId])->getTitle();
         return $this->render('season/show.html.twig', [
             'season' => $season,
+            'program' => $programTitle,
         ]);
-    }
+    }*/
 
     /**
      * @Route("/{id}/edit", name="season_edit", methods={"GET","POST"})

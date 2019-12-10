@@ -9,6 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Program</th>
+                <th>Season</th>
                 <th>Title</th>
                 <th>Number</th>
                 <th>Synopsis</th>
@@ -19,12 +21,14 @@
         {% for episode in episodes %}
             <tr>
                 <td>{{ episode.id }}</td>
+                <td>{{ program }}</td>
+                <td>{{ episode.season }}</td>
                 <td>{{ episode.title }}</td>
                 <td>{{ episode.number }}</td>
                 <td>{{ episode.synopsis }}</td>
                 <td>
-                    <a href="{{ path('episode_show', {'id': episode.id}) }}">show</a>
-                    <a href="{{ path('episode_edit', {'id': episode.id}) }}">edit</a>
+                    <a href="{{ path('episode_show', {'slug_e': episode.slug_e}) }}">show</a>
+                    <a href="{{ path('episode_edit', {'slug_e': episode.slug_e}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

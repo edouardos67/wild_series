@@ -36,6 +36,11 @@ class Episode
      */
     private $synopsis;
 
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $slug_e;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,4 +93,16 @@ class Episode
 
         return $this;
     }
+
+    /*public function getslug_e(): ?string
+    {
+        return $this->slug_e;
+    }
+
+    public function setslug_e(string $slug_e): self
+    {
+        $this->slug_e = $slug_e;
+
+        return $this;
+    }*/
 }

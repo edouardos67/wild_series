@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
+use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,19 +29,23 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+//            $program->setSlug($slugify->generate($program->getTitle()));
             $entityManager->persist($program);
             $entityManager->flush();
 
             return $this->redirectToRoute('program_index');
         }
+
+
 
         return $this->render('program/new.html.twig', [
             'program' => $program,
@@ -48,20 +53,27 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="program_show", methods={"GET"})
-     */
-    public function show(Program $program): Response
+//    /**
+//     * @Route("/{slug_p}", name="program_show", methods={"GET"})
+//     */
+    /*public function show(Program $program): Response
     {
+        $seasons = $program->getSeasons();
+        if (!$seasons) {
+            throw $this->createNotFoundException(
+            'No seasons in '.$program.' program found in program\'s table.'
+            );
+        }
         return $this->render('program/show.html.twig', [
             'program' => $program,
+            'seasons' => $seasons,
         ]);
-    }
+    }*/
 
-    /**
-     * @Route("/{id}/edit", name="program_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Program $program): Response
+//    /**
+//     * @Route("/{slug_p}/edit", name="program_edit", methods={"GET","POST"})
+//     */
+    /*public function edit(Request $request, Program $program): Response
     {
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
@@ -76,12 +88,12 @@ class ProgramController extends AbstractController
             'program' => $program,
             'form' => $form->createView(),
         ]);
-    }
+    }*/
 
-    /**
-     * @Route("/{id}", name="program_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Program $program): Response
+//    /**
+//     * @Route("/{slug_p}", name="program_delete", methods={"DELETE"})
+//     */
+    /*public function delete(Request $request, Program $program): Response
     {
         if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -90,5 +102,5 @@ class ProgramController extends AbstractController
         }
 
         return $this->redirectToRoute('program_index');
-    }
+    }*/
 }
