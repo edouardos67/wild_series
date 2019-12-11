@@ -12,7 +12,7 @@
                 <th>Number</th>
                 <th>Year</th>
                 <th>Description</th>
-{#                <th>Programme</th>#}
+                <th>Programme</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,9 +23,9 @@
                 <td>{{ season.number }}</td>
                 <td>{{ season.year }}</td>
                 <td>{{ season.description }}</td>
-{#                <td>{{ program }}</td>#}
+                <td>{{ season.program }}</td>
                 <td>
-                    <a href="{{ path('season_show', {'season_nb': season.number, 'slug_p': program.slug_p}) }}">show</a>
+                    <a href="{{ path('season_show', { 'season_nb': season.number }) }}">show</a>
 {#                    <a href="{{ path('season_edit', {'id': season.id}) }}">edit</a>#}
                 </td>
             </tr>

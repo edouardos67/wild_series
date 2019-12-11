@@ -24,15 +24,17 @@
                 <td>{{ season.description }}</td>
             </tr>
             <tr>
-                {#<th>Program</th>
-                <td>{{ program }}</td>#}
+                <th>Program</th>
+                <td>{{ programTitle }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('season_index') }}">back to list</a>
+    <a href="{{ path('program_show', { 'slug': slug }) }}">back to Program {{ programTitle }} </a><br>
 
-    <a href="{{ path('season_edit', {'id': season.id}) }}">edit</a>
+    <a href="{{ path('season_edit', { 'number': season.number, 'slug': slug }) }}">edit</a><br>
+
+    <a href="{{ path('episode_index', { 'number': season.number, 'slug': slug }) }}">see episodes</a>
 
     {{ include('season/_delete_form.html.twig') }}
 {% endblock %}

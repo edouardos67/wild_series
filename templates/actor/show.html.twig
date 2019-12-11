@@ -7,7 +7,7 @@
 
     {% for program in actor.programs %}
         <div>
-            <h2><a href="{{ path('program_show', { 'slug_p': program.slug_p }) }}">{{ loop.index }}</a>{{ ' ' ~ program.title }}</h2>
+            <h2><a href="{{ path('program_show', { 'slug': program.slug }) }}">{{ loop.index }}</a>{{ ' ' ~ program.title }}</h2>
             {#            <h2>{{ loop.index }} / {{ season.number }} / {{ season.year }}</h2>#}
 {#            <p>{{ season.description }}</p>#}
         </div>

@@ -38,7 +38,7 @@ class ProgramController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-//            $program->setSlug($slugify->generate($program->getTitle()));
+            $program->setSlug($slugify->generate($program->getTitle()));
             $entityManager->persist($program);
             $entityManager->flush();
 
@@ -53,12 +53,14 @@ class ProgramController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/{slug_p}", name="program_show", methods={"GET"})
-//     */
-    /*public function show(Program $program): Response
+    /**
+     * @Route("/{slug}", name="program_show", methods={"GET"})
+     */
+    public function show(Program $program): Response
     {
         $seasons = $program->getSeasons();
+        /*var_dump($seasons);
+        die();*/
         if (!$seasons) {
             throw $this->createNotFoundException(
             'No seasons in '.$program.' program found in program\'s table.'
@@ -68,12 +70,12 @@ class ProgramController extends AbstractController
             'program' => $program,
             'seasons' => $seasons,
         ]);
-    }*/
+    }
 
-//    /**
-//     * @Route("/{slug_p}/edit", name="program_edit", methods={"GET","POST"})
-//     */
-    /*public function edit(Request $request, Program $program): Response
+    /**
+     * @Route("/{slug}/edit", name="program_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Program $program): Response
     {
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
@@ -88,12 +90,12 @@ class ProgramController extends AbstractController
             'program' => $program,
             'form' => $form->createView(),
         ]);
-    }*/
+    }
 
-//    /**
-//     * @Route("/{slug_p}", name="program_delete", methods={"DELETE"})
-//     */
-    /*public function delete(Request $request, Program $program): Response
+    /**
+     * @Route("/{slug}", name="program_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Program $program): Response
     {
         if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -102,5 +104,5 @@ class ProgramController extends AbstractController
         }
 
         return $this->redirectToRoute('program_index');
-    }*/
+    }
 }

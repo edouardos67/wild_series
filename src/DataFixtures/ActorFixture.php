@@ -8,6 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
+use App\Service\Slugify;
 
 
 class ActorFixture extends Fixture implements DependentFixtureInterface
@@ -39,6 +40,10 @@ class ActorFixture extends Fixture implements DependentFixtureInterface
             } else {
                 $actor->addProgram($this->getReference('program_3'));
             }
+
+            $slugify = new Slugify();
+            $slug = $slugify->generate($actor->getName());
+            $actor->setSlug($slug);
 
             $manager->persist($actor);
             $this->addReference('acteur_'.$i, $actor);

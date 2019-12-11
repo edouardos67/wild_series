@@ -3,14 +3,10 @@
 {% block title %}Episode{% endblock %}
 
 {% block body %}
-    <h1>Episode</h1>
+    <h4>{{ program }} saison : {{ number }}</h4>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ episode.id }}</td>
-            </tr>
             <tr>
                 <th>Title</th>
                 <td>{{ episode.title }}</td>
@@ -26,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('episode_index') }}">back to list</a>
+    <a href="{{ path('episode_index', { 'slug': slug, 'number' : number } ) }}">back to episodes list</a><br>
 
-    <a href="{{ path('episode_edit', {'slug_e': episode.slug_e}) }}">edit</a>
+    <a href="{{ path('episode_edit', {'sluge': episode.sluge, 'slug': slug, 'number' : number }) }}">edit episode</a><br>
 
     {{ include('episode/_delete_form.html.twig') }}
 {% endblock %}

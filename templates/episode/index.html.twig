@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Program</th>
                 <th>Season</th>
                 <th>Title</th>
@@ -19,16 +18,16 @@
         </thead>
         <tbody>
         {% for episode in episodes %}
+
             <tr>
-                <td>{{ episode.id }}</td>
                 <td>{{ program }}</td>
-                <td>{{ episode.season }}</td>
+                <td>{{ number }}</td>
                 <td>{{ episode.title }}</td>
                 <td>{{ episode.number }}</td>
                 <td>{{ episode.synopsis }}</td>
                 <td>
-                    <a href="{{ path('episode_show', {'slug_e': episode.slug_e}) }}">show</a>
-                    <a href="{{ path('episode_edit', {'slug_e': episode.slug_e}) }}">edit</a>
+                    <a href="{{ path('episode_show', {'sluge': episode.sluge, 'slug' : slug, 'number' : number }) }}">show</a>
+                    <a href="{{ path('episode_edit', {'sluge': episode.sluge, 'slug' : slug, 'number' : number }) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('episode_new') }}">Create new</a>
+    <a href="{{ path('episode_new', {'slug' : slug, 'number' : number }) }}">Create new</a>
 {% endblock %}

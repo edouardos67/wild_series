@@ -6,35 +6,32 @@ use App\Entity\Season;
 use App\Entity\Program;
 use App\Form\SeasonType;
 use App\Repository\SeasonRepository;
+use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/program/season")
+ * @Route("program/{slug}/season")
  */
 class SeasonController extends AbstractController
 {
-    /**
-     * @Route("/", name="season_index", methods={"GET"})
-     */
-    public function index(SeasonRepository $seasonRepository): Response
+//    /**
+//     * @Route("/season/", name="season_index", methods={"GET"})
+//     */
+    /*public function index(SeasonRepository $seasonRepository): Response
     {
-        /*$programTitles = $this->getDoctrine()->getRepository(Program::class)
-        ->findOneBy(['id' =>])*/
 
         return $this->render('season/index.html.twig', [
             'seasons' => $seasonRepository->findAll(),
-            /*'slug_ps' => $slug_ps,
-            'programs' => $programTitles,*/
         ]);
-    }
+    }*/
 
     /**
      * @Route("/new", name="season_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new($slug, Request $request): Response
     {
         $season = new Season();
         $form = $this->createForm(SeasonType::class, $season);
@@ -45,38 +42,43 @@ class SeasonController extends AbstractController
             $entityManager->persist($season);
             $entityManager->flush();
 
-            return $this->redirectToRoute('season_index');
+            return $this->redirectToRoute('program_show',['slug' => $slug]);
         }
 
         return $this->render('season/new.html.twig', [
             'season' => $season,
             'form' => $form->createView(),
+            'slug' => $slug,
         ]);
     }
 
-//    /**
-//     * @Route("/{id}", name="season_show", methods={"GET"})
-//     */
-    /*public function show(Season $season): Response
+    /**
+     * @Route("/{number}", name="season_show", methods={"GET"})
+     */
+    public function show(Season $season, Program $program): Response
     {
-//        $programId = $season['program'];
-        var_dump($season);
-        die();
-        $programTitle = $this->getDoctrine()->getRepository(Program::class)
-        ->findOneBy(['id'=>$programId])->getTitle();
+        /*dump($program);
+        dump($season);
+        die();*/
+        $programTitle = $program->getTitle();
+        $slug = $program->getSlug();
+
         return $this->render('season/show.html.twig', [
             'season' => $season,
-            'program' => $programTitle,
+            'programTitle' => $programTitle,
+            'slug' => $slug,
         ]);
-    }*/
+    }
 
     /**
-     * @Route("/{id}/edit", name="season_edit", methods={"GET","POST"})
+     * @Route("/{number}/edit", name="season_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Season $season): Response
+    public function edit(Request $request, Season $season, Program $program): Response
     {
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
+
+        $slug = $program->getSlug();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -86,12 +88,13 @@ class SeasonController extends AbstractController
 
         return $this->render('season/edit.html.twig', [
             'season' => $season,
+            'slug' => $slug,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="season_delete", methods={"DELETE"})
+     * @Route("/{number}", name="season_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Season $season): Response
     {

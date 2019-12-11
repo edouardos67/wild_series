@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Actor;
+use App\Entity\Program;
 use App\Form\ActorType;
 use App\Repository\ActorRepository;
 use App\Service\Slugify;
@@ -11,23 +12,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/actor")
- */
+///**
+// * @Route("program/{slug}/actor")
+// */
 class ActorController extends AbstractController
 {
     /**
-     * @Route("/", name="actor_index", methods={"GET"})
+     * @Route("/actor", name="actor_index", methods={"GET"})
      */
     public function index(ActorRepository $actorRepository): Response
     {
+
         return $this->render('actor/index.html.twig', [
-            'actors' => $actorRepository->findAll(),
+        'actors' => $actorRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="actor_new", methods={"GET","POST"})
+     * @Route("/actor/new", name="actor_new", methods={"GET","POST"})
      */
     public function new(Request $request, Slugify $slugify): Response
     {
@@ -37,7 +39,7 @@ class ActorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $actor->setSlug($slugify->generate($actor->getName()));
+            $actor->setSluga($slugify->generate($actor->getName()));
             $entityManager->persist($actor);
             $entityManager->flush();
 
@@ -52,9 +54,9 @@ class ActorController extends AbstractController
 
 
     /**
-     * @Route("/{slug_a}", name="actor_show", methods={"GET"})
+     * @Route("/actor/{sluga}", name="actor_show", methods={"GET"})
      */
-    public function show(Actor $actor, Slugify $slugify):Response
+    public function show(Actor $actor):Response
     {
         $programs = $this->getDoctrine()
         ->getRepository(Actor::class)
@@ -67,12 +69,14 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/{slug_a}/edit", name="actor_edit", methods={"GET","POST"})
+     * @Route("/actor/{sluga}/edit", name="actor_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Actor $actor): Response
     {
         $form = $this->createForm(ActorType::class, $actor);
         $form->handleRequest($request);
+
+        $sluga = $actor->getSluga();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -83,11 +87,12 @@ class ActorController extends AbstractController
         return $this->render('actor/edit.html.twig', [
             'actor' => $actor,
             'form' => $form->createView(),
+            'sluga' => $sluga,
         ]);
     }
 
     /**
-     * @Route("/{slug_a}", name="actor_delete", methods={"DELETE"})
+     * @Route("/actor/{sluga}", name="actor_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Actor $actor): Response
     {

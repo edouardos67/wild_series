@@ -1,3 +1,7 @@
+vidéo quete 16 :
+https://www.loom.com/share/86aa95cb71b04419a8c78a40be258ffc
+
+
 vidéos quete 15 :
 https://www.loom.com/share/c9ff9c6ba7884ede8cfca45d247411e2
 https://www.loom.com/share/51685f742f8d4501ac6dd9a04e9e3a60

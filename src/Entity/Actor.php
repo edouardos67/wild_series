@@ -28,10 +28,11 @@ class Actor
      */
     private $programs;
 
-//    /**
-//     * @ORM\Column(type="string", length=255)
-//     */
-//    private $slug_a;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $sluga;
+
 
     public function __construct()
     {
@@ -81,15 +82,17 @@ class Actor
         return $this;
     }
 
-    /*public function getslug_a(): ?string
+    public function getSluga(): ?string
     {
-        return $this->slug_a;
+        return $this->sluga;
     }
 
-    public function setslug_a(string $slug_a): self
+    public function setSluga(string $sluga): self
     {
-        $this->slug_a = $slug_a;
+        $this->sluga = $sluga;
 
         return $this;
-    }*/
+    }
+
+
 }
