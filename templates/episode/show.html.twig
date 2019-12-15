@@ -22,6 +22,20 @@
         </tbody>
     </table>
 
+    {% if comments is defined and app.user %}
+        <h3>Commentaires  </h3><br>
+        {% for comment in comments %}
+            <div>
+                <h4>Commentaire laissé par : {{ comment.author.email }}</h4>
+                <p >{{ comment.comment }}</p>
+                <p >note : {{ comment.rate }}</p>
+            </div>
+        {% endfor %}
+        <h3>Laissez votre commentaire  </h3><br>
+        {{ include('comment/_form.html.twig') }}
+    {% endif %}
+
+
     <a href="{{ path('episode_index', { 'slug': slug, 'number' : number } ) }}">back to episodes list</a><br>
 
     <a href="{{ path('episode_edit', {'sluge': episode.sluge, 'slug': slug, 'number' : number }) }}">edit episode</a><br>

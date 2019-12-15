@@ -2,12 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Entity\User;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\EpisodeType;
+
+use App\Repository\CommentRepository;
 use App\Repository\EpisodeRepository;
+use App\Repository\UserRepository;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,23 +69,69 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{sluge}", name="episode_show", methods={"GET"})
+     * @Route("/{sluge}", name="episode_show")
      */
-    public function show($sluge, Season $season, Program $program, EpisodeRepository $episodeRepository): Response
+    public function show($sluge, Season $season, Program $program, EpisodeRepository $episodeRepository,
+                         CommentRepository $commentRepository, Request $request, EntityManagerInterface $em, Slugify $slugify): Response
     {
 
         $episode = $episodeRepository->findOneBySluge($sluge);
+        $episodeId = $episode->getId();
+        $comments = $commentRepository->findByEpisode($episodeId);
+
+      /*  dump($comments);
+        die();*/
+
 
         $seasonNb = $season->getNumber();
         $slug = $program->getSlug();
         $programTitle = $program->getTitle();
-        return $this->render('episode/show.html.twig', [
-            'episode' => $episode,
-            'slug' => $slug,
-            'number' => $seasonNb,
-            'program' => $programTitle,
 
-        ]);
+        /*dump($user);
+        die();*/
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->render('episode/show.html.twig', [
+                'episode' => $episode,
+                'slug' => $slug,
+                'number' => $seasonNb,
+                'program' => $programTitle,
+                'comments' => $comments,
+            ]);
+        } else {
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                /*dump($comment);
+                die();*/
+                $comment->setAuthor($user);
+                $comment->setEpisode($episode);
+                $em->persist($comment);
+                $em->flush();
+                $episodes = $season->getEpisodes();
+                return $this->redirectToRoute('episode_index', [
+                    'episodes' => $episodes,
+                    'slug' => $slug,
+                    'number' => $seasonNb,
+                    'program' => $programTitle,
+                ]);
+            }
+            /*
+            dump($comment);
+            die();*/
+
+            return $this->render('episode/show.html.twig', [
+                'episode' => $episode,
+                'slug' => $slug,
+                'number' => $seasonNb,
+                'program' => $programTitle,
+                'comments' => $comments,
+                'form' => $form->createView(),
+            ]);
+        }
+
+
     }
 
     /**
